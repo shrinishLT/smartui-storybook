@@ -175,6 +175,10 @@ describe('selectAffectedStories', () => {
 		expect(select(dir, { baseline: null }).reason).toMatch(/no approved baseline build/);
 	});
 
+	test('a baseline without a commit captures everything with the server\'s reason', () => {
+		expect(select(dir, { baseline: { reason: 'the project uses a SmartUI-managed baseline' } }).reason).toMatch(/SmartUI-managed baseline/);
+	});
+
 	test('nothing changed since the baseline commit affects no story', () => {
 		expect(select(dir)).toEqual({ storyIds: [], changedFiles: [] });
 	});

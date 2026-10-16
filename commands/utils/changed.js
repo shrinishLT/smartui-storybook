@@ -66,7 +66,7 @@ function getChangedFiles(cwd, baseline, run = runGit) {
     }
     const repoRoot = top.trim();
     if (!baseline || !baseline.commitId) {
-        return { reason: 'the project has no approved baseline build to compare against' };
+        return { reason: (baseline && baseline.reason) || 'the project has no approved baseline build to compare against' };
     }
     const resolve = () => (run(['rev-parse', '--verify', '--quiet', `${baseline.commitId}^{commit}`], cwd) || '').trim() || null;
 

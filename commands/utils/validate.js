@@ -119,10 +119,12 @@ async function fetchBaselineBuild(options, commit) {
             headers: {
                 projectToken: process.env.PROJECT_TOKEN
             },
+            // the branches staticrender will hand DES, so the lookup picks the same baseline build
             params: {
-                branch: commit.branch,
+                branch: process.env.CURRENT_BRANCH || commit.branch,
                 commitId: commit.shortHash,
-                baseline: 'true'
+                baseline: 'true',
+                baselineBranch: process.env.BASELINE_BRANCH || ''
             }
         });
         return (response.data && response.data.baseline) || null;
